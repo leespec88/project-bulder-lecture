@@ -1,3 +1,27 @@
+// 테마 전환 기능
+function initTheme() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    
+    if (currentTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        themeToggle.textContent = '라이트 모드';
+    }
+
+    themeToggle.addEventListener('click', () => {
+        let theme = document.documentElement.getAttribute('data-theme');
+        if (theme === 'dark') {
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'light');
+            themeToggle.textContent = '다크 모드';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+            themeToggle.textContent = '라이트 모드';
+        }
+    });
+}
+
 function getBallClass(num) {
     if (num <= 10) return 'range-1';
     if (num <= 20) return 'range-2';
@@ -36,5 +60,8 @@ function generateLotto() {
     }
 }
 
-// 페이지 로드 시 초기 번호 생성
-document.addEventListener('DOMContentLoaded', generateLotto);
+// 페이지 로드 시 초기 번호 생성 및 테마 초기화
+document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
+    generateLotto();
+});

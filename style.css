@@ -4,6 +4,17 @@
     --bg-color: #f0f2f5;
     --card-bg: #ffffff;
     --text-color: #333;
+    --border-color: #eee;
+    --set-bg: #f8f9fa;
+    --transition-speed: 0.3s;
+}
+
+[data-theme="dark"] {
+    --bg-color: #1a1a1a;
+    --card-bg: #2d2d2d;
+    --text-color: #f0f2f5;
+    --border-color: #444;
+    --set-bg: #383838;
 }
 
 body {
@@ -16,16 +27,37 @@ body {
     justify-content: center;
     min-height: 100vh;
     margin: 0;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
 }
 
 .container {
     background-color: var(--card-bg);
     padding: 2rem;
     border-radius: 1rem;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     text-align: center;
     width: 90%;
     max-width: 500px;
+    transition: background-color var(--transition-speed);
+    position: relative;
+}
+
+.theme-toggle {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+.theme-toggle:hover {
+    background-color: var(--border-color);
 }
 
 h1 {
@@ -45,9 +77,10 @@ h1 {
     justify-content: center;
     gap: 0.5rem;
     padding: 10px;
-    background: #f8f9fa;
+    background: var(--set-bg);
     border-radius: 8px;
-    border: 1px solid #eee;
+    border: 1px solid var(--border-color);
+    transition: background-color var(--transition-speed), border-color var(--transition-speed);
 }
 
 .ball {
