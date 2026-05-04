@@ -172,3 +172,10 @@ button:active {
     width: 100%;
     margin-top: 0.5rem;
 }
+
+/* 댓글 섹션 스타일 */
+.comment-section {
+    margin-top: 2rem;
+    margin-bottom: 5rem;
+    padding: 2rem;
+}
