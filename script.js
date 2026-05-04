@@ -46,6 +46,78 @@ function analyzeNumbers(numbers) {
     };
 }
 
+// 클립보드 복사 기능
+function copyToClipboard(numbers) {
+    const text = numbers.join(', ');
+    navigator.clipboard.writeText(text).then(() => {
+        alert('번호가 클립보드에 복사되었습니다: ' + text);
+    }).catch(err => {
+        console.error('복사 실패:', err);
+    });
+}
+
+// 번호 저장 기능 (Local Storage)
+function saveNumberSet(numbers) {
+    let saved = JSON.parse(localStorage.getItem('savedLotto')) || [];
+    
+    // 중복 체크
+    const isDuplicate = saved.some(set => JSON.stringify(set) === JSON.stringify(numbers));
+    if (isDuplicate) {
+        alert('이미 저장된 번호입니다.');
+        return;
+    }
+
+    saved.unshift(numbers); // 최신 저장 건을 위로
+    localStorage.setItem('savedLotto', JSON.stringify(saved));
+    renderSavedNumbers();
+    alert('번호가 저장되었습니다.');
+}
+
+// 저장된 번호 렌더링
+function renderSavedNumbers() {
+    const container = document.getElementById('saved-list');
+    if (!container) return;
+
+    const saved = JSON.parse(localStorage.getItem('savedLotto')) || [];
+    
+    if (saved.length === 0) {
+        container.innerHTML = '<p class="empty-msg">저장된 번호가 없습니다.</p>';
+        return;
+    }
+
+    container.innerHTML = '';
+    saved.forEach((numbers, index) => {
+        const item = document.createElement('div');
+        item.className = 'saved-item';
+
+        const numsDiv = document.createElement('div');
+        numsDiv.className = 'saved-nums';
+        numbers.forEach(num => {
+            const ball = document.createElement('div');
+            ball.className = 'saved-ball';
+            ball.textContent = num;
+            numsDiv.appendChild(ball);
+        });
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.textContent = '삭제';
+        deleteBtn.onclick = () => deleteSavedNumber(index);
+
+        item.appendChild(numsDiv);
+        item.appendChild(deleteBtn);
+        container.appendChild(item);
+    });
+}
+
+// 저장된 번호 삭제
+function deleteSavedNumber(index) {
+    let saved = JSON.parse(localStorage.getItem('savedLotto')) || [];
+    saved.splice(index, 1);
+    localStorage.setItem('savedLotto', JSON.stringify(saved));
+    renderSavedNumbers();
+}
+
 function generateLotto() {
     const container = document.getElementById('lotto-sets');
     if (!container) return;
@@ -77,6 +149,23 @@ function generateLotto() {
             setDiv.appendChild(ball);
         });
 
+        // 액션 버튼 (복사, 저장)
+        const actionsDiv = document.createElement('div');
+        actionsDiv.className = 'set-actions';
+        
+        const copyBtn = document.createElement('button');
+        copyBtn.className = 'action-btn copy-btn';
+        copyBtn.textContent = '복사';
+        copyBtn.onclick = () => copyToClipboard(numbers);
+
+        const saveBtn = document.createElement('button');
+        saveBtn.className = 'action-btn save-btn';
+        saveBtn.textContent = '저장';
+        saveBtn.onclick = () => saveNumberSet(numbers);
+
+        actionsDiv.appendChild(copyBtn);
+        actionsDiv.appendChild(saveBtn);
+
         const infoDiv = document.createElement('div');
         infoDiv.className = 'analysis-info';
         infoDiv.innerHTML = `
@@ -86,12 +175,14 @@ function generateLotto() {
         `;
 
         setWrapper.appendChild(setDiv);
+        setWrapper.appendChild(actionsDiv);
         setWrapper.appendChild(infoDiv);
         container.appendChild(setWrapper);
     }
 }
 
-// 페이지 로드 시 테마 초기화
+// 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
+    renderSavedNumbers();
 });
