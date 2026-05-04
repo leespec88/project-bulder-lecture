@@ -91,8 +91,7 @@ function generateLotto() {
     }
 }
 
-// 페이지 로드 시 초기 번호 생성 및 테마 초기화
+// 페이지 로드 시 테마 초기화
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
-    generateLotto();
 });
