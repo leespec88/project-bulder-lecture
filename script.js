@@ -1,6 +1,8 @@
 // 테마 전환 기능
 function initTheme() {
     const themeToggle = document.getElementById('theme-toggle');
+    if (!themeToggle) return;
+
     const currentTheme = localStorage.getItem('theme') || 'light';
     
     if (currentTheme === 'dark') {
@@ -30,6 +32,20 @@ function getBallClass(num) {
     return 'range-5';
 }
 
+function analyzeNumbers(numbers) {
+    const sum = numbers.reduce((a, b) => a + b, 0);
+    const odds = numbers.filter(n => n % 2 !== 0).length;
+    const evens = 6 - odds;
+    const highs = numbers.filter(n => n >= 23).length; // 23~45
+    const lows = 6 - highs; // 1~22
+
+    return {
+        sum,
+        oddEven: `${odds}:${evens}`,
+        highLow: `${highs}:${lows}`
+    };
+}
+
 function generateLotto() {
     const container = document.getElementById('lotto-sets');
     if (!container) return;
@@ -46,6 +62,11 @@ function generateLotto() {
         }
         numbers.sort((a, b) => a - b);
 
+        const analysis = analyzeNumbers(numbers);
+
+        const setWrapper = document.createElement('div');
+        setWrapper.className = 'lotto-set-wrapper';
+
         const setDiv = document.createElement('div');
         setDiv.className = 'lotto-set';
 
@@ -56,7 +77,17 @@ function generateLotto() {
             setDiv.appendChild(ball);
         });
 
-        container.appendChild(setDiv);
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'analysis-info';
+        infoDiv.innerHTML = `
+            <span class="analysis-item">총합: <b>${analysis.sum}</b></span>
+            <span class="analysis-item">홀짝: <b>${analysis.oddEven}</b></span>
+            <span class="analysis-item">고저: <b>${analysis.highLow}</b></span>
+        `;
+
+        setWrapper.appendChild(setDiv);
+        setWrapper.appendChild(infoDiv);
+        container.appendChild(setWrapper);
     }
 }
 

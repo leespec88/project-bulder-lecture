@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로또 번호 생성기</title>
+    <title>로또 번호 생성기 - 무료 번호 추출 및 통계 분석 도구</title>
+    <meta name="description" content="매주 당첨 기회를 높이는 무료 로또 번호 생성기입니다. 홀짝 비율, 총합 등 통계 분석 데이터와 함께 고품질 번호를 추출하세요.">
     <link rel="stylesheet" href="style.css">
     <meta name="google-adsense-account" content="ca-pub-3174843856212979">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3174843856212979"
@@ -11,33 +12,80 @@
 </head>
 <body>
 
-<div class="container">
-    <button id="theme-toggle" class="theme-toggle">다크 모드</button>
-    <h1>로또 번호 생성기</h1>
-    <div id="lotto-sets" class="lotto-sets">
-        <!-- 번호가 여기에 생성됩니다 -->
-    </div>
-    <button onclick="generateLotto()">새로운 번호 생성</button>
-</div>
+<header class="header">
+    <nav class="nav-container">
+        <a href="#" class="logo">LottoGen</a>
+        <ul class="nav-links">
+            <li><a href="#generator">번호 생성</a></li>
+            <li><a href="#guide">가이드</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact">문의</a></li>
+        </ul>
+        <button id="theme-toggle" class="theme-toggle">다크 모드</button>
+    </nav>
+</header>
 
-<div class="container contact-section">
-    <h2>제휴 문의</h2>
-    <form action="https://formspree.io/f/xzdoeego" method="POST" class="contact-form">
-        <div class="form-group">
-            <label for="name">성함</label>
-            <input type="text" id="name" name="name" placeholder="성함을 입력해 주세요" required>
+<main class="main-content">
+    <section id="generator" class="container">
+        <h1>로또 번호 생성기</h1>
+        <p class="subtitle">행운의 번호 6개를 지금 바로 확인하세요!</p>
+        <div id="lotto-sets" class="lotto-sets">
+            <!-- 번호가 여기에 생성됩니다 -->
         </div>
-        <div class="form-group">
-            <label for="email">이메일</label>
-            <input type="email" id="email" name="email" placeholder="email@example.com" required>
+        <button onclick="generateLotto()" class="generate-btn">새로운 번호 생성</button>
+    </section>
+
+    <section id="guide" class="container info-section">
+        <h2>로또 번호 분석 가이드</h2>
+        <div class="content-block">
+            <h3>1. 생성 알고리즘 안내</h3>
+            <p>본 사이트의 번호 생성기는 자바스크립트의 <code>Math.random()</code> 함수를 사용하여 1부터 45까지의 숫자 중 중복 없이 6개를 무작위로 추출합니다. 어떠한 인위적인 조작 없이 완전한 확률적 독립성을 보장합니다.</p>
         </div>
-        <div class="form-group">
-            <label for="message">문의 내용</label>
-            <textarea id="message" name="message" rows="4" placeholder="문의하실 내용을 입력해 주세요" required></textarea>
+        <div class="content-block">
+            <h3>2. 당첨 확률 높이는 팁</h3>
+            <p>로또의 당첨 확률은 약 814만 분의 1입니다. 하지만 번호 조합 시 '총합', '홀짝 비율', '고저 비율' 등을 참고하면 더욱 균형 잡힌 번호를 선택할 수 있습니다. 생성된 번호 하단의 분석 데이터를 꼭 확인해 보세요.</p>
         </div>
-        <button type="submit" class="submit-btn">문의하기</button>
-    </form>
-</div>
+    </section>
+
+    <section id="faq" class="container faq-section">
+        <h2>자주 묻는 질문 (FAQ)</h2>
+        <div class="faq-item">
+            <h4>Q. 이 서비스는 무료인가요?</h4>
+            <p>A. 네, 본 서비스는 누구나 조건 없이 이용할 수 있는 100% 무료 로또 번호 추출 도구입니다.</p>
+        </div>
+        <div class="faq-item">
+            <h4>Q. 과거 당첨 번호를 분석하나요?</h4>
+            <p>A. 무작위 추출을 원칙으로 하지만, 생성된 조합의 통계적 특성을 제공하여 사용자가 판단할 수 있도록 돕습니다.</p>
+        </div>
+        <div class="faq-item">
+            <h4>Q. 생성된 번호가 실제로 당첨되나요?</h4>
+            <p>A. 로또는 확률 게임입니다. 생성된 번호는 당첨을 보장하지 않으며, 재미와 참고용으로 활용해 주시기 바랍니다.</p>
+        </div>
+    </section>
+
+    <section id="contact" class="container contact-section">
+        <h2>제휴 문의</h2>
+        <form action="https://formspree.io/f/xzdoeego" method="POST" class="contact-form">
+            <div class="form-group">
+                <label for="name">성함</label>
+                <input type="text" id="name" name="name" placeholder="성함을 입력해 주세요" required>
+            </div>
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input type="email" id="email" name="email" placeholder="email@example.com" required>
+            </div>
+            <div class="form-group">
+                <label for="message">문의 내용</label>
+                <textarea id="message" name="message" rows="4" placeholder="문의하실 내용을 입력해 주세요" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">문의하기</button>
+        </form>
+    </section>
+</main>
+
+<footer class="footer">
+    <p>&copy; 2026 LottoGen. All rights reserved.</p>
+</footer>
 
 <script src="script.js"></script>
 </body>
